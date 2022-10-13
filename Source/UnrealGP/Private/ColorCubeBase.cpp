@@ -3,6 +3,8 @@
 
 #include "ColorCubeBase.h"
 
+#include "Net/UnrealNetwork.h"
+
 
 // Sets default values
 AColorCubeBase::AColorCubeBase()
@@ -25,8 +27,37 @@ void AColorCubeBase::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+void AColorCubeBase::Rep_CurrentColor()
+{
+	CubeComponent -> SetMaterial(0, MaterialsMap[CurrentColor]);
+}
+
 void AColorCubeBase::ChangeColor()
 {
-	
+	switch (CurrentColor)
+	{
+		case EColors::Red:
+			CurrentColor = EColors::Green;
+			break;
+
+		case EColors::Green:
+			CurrentColor = EColors::Blue;
+			break;
+
+		case EColors::Blue:
+			CurrentColor = EColors::Red;
+			break;
+
+		default: ;
+	}
+
+	Rep_CurrentColor();
+}
+
+void AColorCubeBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(AColorCubeBase, CurrentColor);
 }
 

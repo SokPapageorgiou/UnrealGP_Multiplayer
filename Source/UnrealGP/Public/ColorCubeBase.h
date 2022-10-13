@@ -23,20 +23,29 @@ public:
 	// Sets default values for this actor's properties
 	AColorCubeBase();
 
+	virtual void Tick(float DeltaTime) override;
+
+	UFUNCTION(BlueprintCallable)
+	void ChangeColor();	
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly)
-    TMap<EColors, UMaterialInterface*> Materials;
+    TMap<EColors, UMaterialInterface*> MaterialsMap;
 	
 	UPROPERTY(EditDefaultsOnly)
 	UStaticMeshComponent* CubeComponent;
 
-public:
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+private:
 
-	UFUNCTION(BlueprintCallable)
-	void ChangeColor();	
+	UPROPERTY(ReplicatedUsing = Rep_CurrentColor)
+	EColors CurrentColor;
+
+	UFUNCTION()
+	void Rep_CurrentColor();
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+	
 };
