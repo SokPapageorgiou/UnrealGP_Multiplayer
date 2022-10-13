@@ -6,6 +6,14 @@
 #include "GameFramework/Actor.h"
 #include "ColorCubeBase.generated.h"
 
+UENUM(BlueprintType)
+enum class EColors : uint8
+{
+	Red,
+	Green,
+	Blue
+};
+
 UCLASS()
 class UNREALGP_API AColorCubeBase : public AActor
 {
@@ -19,6 +27,9 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditDefaultsOnly)
+    TMap<EColors, UMaterialInterface*> Materials;
+	
 	UPROPERTY(EditDefaultsOnly)
 	UStaticMeshComponent* CubeComponent;
 
