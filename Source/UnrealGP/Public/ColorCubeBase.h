@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "InteractIF.h"
 #include "GameFramework/Actor.h"
 #include "ColorCubeBase.generated.h"
 
@@ -15,7 +16,7 @@ enum class EColors : uint8
 };
 
 UCLASS()
-class UNREALGP_API AColorCubeBase : public AActor
+class UNREALGP_API AColorCubeBase : public AActor, public IInteractIF
 {
 	GENERATED_BODY()
 
@@ -47,5 +48,7 @@ private:
 	void Rep_CurrentColor();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	void Interact_Implementation(ACharacter* Interactor) override;
 	
 };
