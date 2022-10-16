@@ -49,6 +49,6 @@ private:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
-	void Interact_Implementation(ACharacter* Interactor) override;
+	virtual void Interact_Implementation(ACharacter* Interactor) override;
 	
 };
