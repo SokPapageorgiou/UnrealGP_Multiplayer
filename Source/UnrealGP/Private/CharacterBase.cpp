@@ -11,6 +11,8 @@ ACharacterBase::ACharacterBase()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	AbilitySystemComponent = CreateDefaultSubobject<UGPAbilitySystemBase>(TEXT("AbilitySystemComponent"));
 }
 
 // Called when the game starts or when spawned
@@ -30,6 +32,17 @@ void ACharacterBase::Tick(float DeltaTime)
 void ACharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
+
+void ACharacterBase::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	if(AbilitySystemComponent)	
+		AbilitySystemComponent -> InitAbilityActorInfo(this, this);
+
+	SetOwner(NewController);
+	
 }
 
 void ACharacterBase::ServerInteract_Implementation(AActor* HitActor, ACharacter* Interactor)
