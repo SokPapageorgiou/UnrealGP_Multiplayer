@@ -31,6 +31,11 @@ bool UGPAbilitySystemBase::GrantAbilities()
 {
 	for (const TSubclassOf<UGameplayAbility>& Ability : GrantedAbilities)
 	{
+		if(Ability == nullptr)
+			GEngine->AddOnScreenDebugMessage(
+			-1, 10, FColor::Red,
+			FString::Printf(TEXT("%s has empty ability slot"), *GetOwner()->GetName()));
+		
 		FGameplayAbilitySpec AbilitySpec{Ability};
 		GiveAbility(AbilitySpec);
 	}
