@@ -4,6 +4,7 @@
 #include "Components/GPAbilitySystemBase.h"
 
 
+
 // Sets default values for this component's properties
 UGPAbilitySystemBase::UGPAbilitySystemBase()
 {
@@ -20,17 +21,20 @@ void UGPAbilitySystemBase::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
-	
+	if(!GrantAbilities())
+		GEngine->AddOnScreenDebugMessage(
+			-1, 10, FColor::Red,
+			FString::Printf(TEXT("%s has no abilities"), *GetOwner()->GetName()));
 }
 
-
-// Called every frame
-void UGPAbilitySystemBase::TickComponent(float DeltaTime, ELevelTick TickType,
-                                              FActorComponentTickFunction* ThisTickFunction)
+bool UGPAbilitySystemBase::GrantAbilities()
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	for (const TSubclassOf<UGameplayAbility>& Ability : GrantedAbilities)
+	{
+		FGameplayAbilitySpec AbilitySpec{Ability};
+		GiveAbility(AbilitySpec);
+	}
 
-	// ...
+	return !GrantedAbilities.IsEmpty();
 }
 
