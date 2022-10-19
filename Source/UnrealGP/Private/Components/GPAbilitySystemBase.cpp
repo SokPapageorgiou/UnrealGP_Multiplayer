@@ -34,8 +34,7 @@ bool UGPAbilitySystemBase::GrantAbilities()
 		checkf(Ability, TEXT("Missing ability slot %s"), *GetOwner()->GetName());
 
 		const FGameplayAbilitySpec* FoundSpec = FindAbilitySpecFromClass(Ability);
-		if(FoundSpec && FoundSpec->Ability->GetClass() == Ability) continue;
-			
+		if(FoundSpec && FoundSpec->Ability->GetClass() == Ability) continue;			
 		
 		FGameplayAbilitySpec AbilitySpec{Ability};
 		GiveAbility(AbilitySpec);

@@ -56,9 +56,13 @@ public:
 	void CallInterface();
 
 private:
+
+	UPROPERTY(Replicated)
 	TArray<FItemStruct> Items;
 
 	void Debug();
 
 	virtual FString TextToPrint() override;
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

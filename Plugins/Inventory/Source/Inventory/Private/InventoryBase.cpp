@@ -3,6 +3,8 @@
 
 #include "InventoryBase.h"
 
+#include "Net/UnrealNetwork.h"
+
 
 // Sets default values for this component's properties
 UInventoryBase::UInventoryBase()
@@ -89,6 +91,12 @@ void UInventoryBase::Debug()
 FString UInventoryBase::TextToPrint()
 {
 	return "Hello World from inventory";
+}
+
+void UInventoryBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME(UInventoryBase, Items);
 }
 
 void UInventoryBase::CallInterface()
